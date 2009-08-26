@@ -84,16 +84,16 @@ public class HWAlarmCollector implements Runnable {
 				ManagedGenericIRPConstDefs.StringTypeOpt filter = new ManagedGenericIRPConstDefs.StringTypeOpt();
 				filter.value("");
 				try {
-					String res = notifyIRP.attach_push(manager_reference, time_tick, notification_categories, filter);
-					System.out.println("success : "+res);
+//					String res = notifyIRP.attach_push(manager_reference, time_tick, notification_categories, filter);
+//					System.out.println("success : "+res);
 				} catch (Exception e) {
-					// TODO: handle exception
+					e.printStackTrace();
 				}finally{
 					root.release_IRP_reference("zjpii-gp", notificationIRPReference.value);
 					notifyIRP._release();
 				}
 
-				
+				System.out.println("******************************************************************");
 				
 				
 				
@@ -124,7 +124,31 @@ public class HWAlarmCollector implements Runnable {
 						= new AlarmIRPConstDefs.DNTypeOpt();
 				sto.value(true, "");
 				base_object.value("");
-				CosNotification.StructuredEvent[] str1 = alarmRoot.get_alarm_list(sto, base_object, flag, iter);
+				org.omg.CORBA.IntHolder critical_count = new org.omg.CORBA.IntHolder();
+				org.omg.CORBA.IntHolder major_count = new org.omg.CORBA.IntHolder();
+				org.omg.CORBA.IntHolder minor_count = new org.omg.CORBA.IntHolder();
+				org.omg.CORBA.IntHolder warning_count = new org.omg.CORBA.IntHolder();
+				org.omg.CORBA.IntHolder indeterminate_count = new org.omg.CORBA.IntHolder();
+				org.omg.CORBA.IntHolder cleared_count = new org.omg.CORBA.IntHolder();
+				alarmRoot.get_alarm_count(sto, critical_count, major_count, minor_count, warning_count, indeterminate_count, cleared_count);
+				System.out.println("critical_count : "+critical_count.value);
+				System.out.println("major_count : "+major_count.value);
+				System.out.println("minor_count : "+minor_count.value);
+				System.out.println("warning_count : "+warning_count.value);
+				System.out.println("indeterminate_count : "+indeterminate_count.value);
+				System.out.println("cleared_count : "+cleared_count.value);
+				
+//				$e == 'DC=www.huawei.com , SubNetwork=1 , ManagementNode=1'
+				sto.value(true, "$e == \'DC=www.huawei.com , SubNetwork=1 , ManagementNode=1\'");
+				CosNotification.StructuredEvent[] str1 = null;
+				try {
+					str1 = alarmRoot.get_alarm_list(sto, base_object, flag, iter);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}finally{
+					alarmRoot._release();
+				}
+		
 				System.out.println(flag.value);
 				System.out.println(str1.length);
 				for(int i= 0; i<str1.length; i++){
