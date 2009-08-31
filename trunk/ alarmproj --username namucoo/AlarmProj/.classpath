@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="E:/alarmProj/lib/inms-common.jar"/>
 	<classpathentry kind="lib" path="E:/alarmProj/lib/inms-utility.jar"/>
 	<classpathentry kind="lib" path="E:/alarmProj/lib/V2IDL.jar"/>
+	<classpathentry kind="lib" path="E:/alarmProj/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="E:/alarmProj/lib/jdom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
