@@ -2,12 +2,11 @@ package com.xc.alarm.wri.impl;
 
 import java.util.Properties;
 
-import org.omg.CosNaming.*;
+import CosNaming.*;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import org.omg.PortableServer.POAManager;
 
-import com.xc.alarm.hw.impl.HWAlarmCollector;
 public class FHAlarmCollector implements Runnable {
 
 	public void run() {
@@ -39,6 +38,7 @@ public class FHAlarmCollector implements Runnable {
 			org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init(aryArgs, null);
 			 // Obtain the root context.
 		      org.omg.CORBA.Object rootObj = orb.resolve_initial_references("RootPOA");
+		      System.out.println(rootObj);
 		      rootpoa= POAHelper.narrow(rootObj);
 		       rootMgr = rootpoa.the_POAManager();
 		     
